@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=en> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]>
+<html class="no-js lt-ie9 lt-ie8" lang=en><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]>
+<html class="no-js lt-ie9" lang=en><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=no-js lang=en><!--<![endif]-->
+<head>
+<meta charset=utf-8>
+<meta name=description content="International radio for hustle and discofox dancers">
+<meta name=keywords content="radio, hustle, discofox, dance, music, popular, online,">
+<title>Radio Hustle</title>
+<meta http-equiv=cleartype content=on>
+<meta name=format-detection content="telephone=no">
+<meta name=format-detection content="date=no">
+<meta name=format-detection content="address=no">
+<meta name=Cache-Control content="no-cache"/>
+<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+<link rel=stylesheet type=text/css href=../css/style.css>
+<link rel="shortcut icon" href="/img/base/favicon.ico"/>
+<link rel=apple-touch-icon-precomposed href="http://etchapps.com/img/base/apple-touch-icon-57x57-precomposed.png"/>
+<link rel=apple-touch-icon-precomposed sizes=72x72 href="http://etchapps.com/img/base/apple-touch-icon-72x72-precomposed.png"/>
+<link rel=apple-touch-icon-precomposed sizes=114x114 href="http://etchapps.com/img/base/apple-touch-icon-114x114-precomposed.png"/>
+<link rel=stylesheet href=./css/liMarquee.css>
+<script src=//code.jquery.com/jquery-1.11.2.min.js></script>
+<script src=../js/functions.js></script>
+<script src=../js/share.js></script>
+<script>$(window).load(function(){$(".str_wrap").liMarquee()});</script>
+<!--[if (IE 7)]>
+<link rel=stylesheet href=/css/fallback/icons-ie7.1389634668.css>
+<![endif]-->
+</head>
+<body>
+<div class=main-container>
+<header class=block>
+<ul class="header-menu horizontal-list">
+<li>
+<a class=header-menu-tab><span class="icon fontawesome-info-sign scnd-font-color"></span>BETA
+version</a>
+</li>
+<div class=profile-menu>
+<span class="scnd-font-color title">RADIO HUSTLE</span>
+<span class="icon fontawesome-music scnd-font-color"></span>
+</div>
+</ul>
+</header>
+<div class="left-container container">
+<div class="weather block clear" style=height:100%>
+<div class=arrow-btn-container>
+<div>
+<h2 class=titular>LINKS</h2>
+</div>
+</div>
+<ul class=next-days>
+<li>
+<a target=_blank href=http://discoswing.ru>
+<p class=next-days-date><span class="link-text day">discoswing.ru</span></p>
+</a>
+</li>
+<li>
+<a target=_blank href=http://radio-hustle.com/points/>
+<p class=next-days-date><span class="link-text day">HSA Calc</span></p>
+</a>
+</li>
+</ul>
+</div>
+<ul class="social block">
+<li><a href=# onclick="Share.facebook('http://radio-hustle.com','Radio Hustle - сборник самой актуальной музыки для хастла/дискофокса','','Radio Hustle - сборник самой актуальной музыки для хастла/дискофокса')">
+<div class="facebook icon"><span class=zocial-facebook></span></div>
+<h2 class="facebook titular">SHARE TO FACEBOOK</h2></a>
+</li>
+<li><a href=# onclick="Share.twitter('http://radio-hustle.com','Radio Hustle - сборник самой актуальной музыки для хастла/дискофокса')">
+<div class="twitter icon"><span class=zocial-twitter></span></div>
+<h2 class="twitter titular">SHARE TO TWITTER</h2></a>
+</li>
+<li><a href=# onclick="Share.vkontakte('http://radio-hustle.com','Radio Hustle - сборник самой актуальной музыки для хастла/дискофокса','','Radio Hustle - сборник самой актуальной музыки для хастла/дискофокса')">
+<div class="vk icon"><span class=zocial-vk></span></div>
+<h2 class="vk titular">SHARE TO VK</h2></a>
+</li>
+</ul>
+</div>
+<script>var date=new Date();var day=function(){switch(date.getDay()){case 0:return"SUNDAY";case 1:return"MONDAY";case 2:return"TUESDAY";case 3:return"WEDNESDAY";case 4:return"THURSDAY";case 5:return"FRIDAY";case 6:return"CATURDAY";default:return"THIS DAY"}}();$("#calendar-title").text(day);$("#calendar-date").text(date.getDate());</script>
+<div class="middle-container container">
+<div class=block>
+<h2 class=titular style=background:#35aadc><span class="icon fontawesome-info-sign"></span> Info
+</h2>
+<div class=tweet>
+<p>
+Номер: %id%
+<br>
+ФИО: %name%
+<br>
+Класс: %class%
+<br>
+A: %A%
+<br>
+B: %B%
+<br>
+C: %C%
+<br>
+D: %D%
+<br>
+E: %E%
+<br>
+Текущий клуб(ы): %club%
+<br>
+</p>
+<p style="padding:30px 30px 30px">
+История выступлений:
+<br>
+%story%
+</p>
+</div>
+</div>
+</div>
+<script>function retButton(a){var c=a.substring(0,a.indexOf("href"));var b=a.substring(a.indexOf("href"));b=b.replace(/\s-\s.*$/i,"");console.log(c+"\n"+b);return c+b}$.ajax({url:"xml/e.html",type:"GET",success:function(c){var d=document.getElementById("events");d.innerHTML+='<span style="paddign: 5px">';c=c.replace('<meta charset="utf-8">',"");var b=c.split("~");for(var a=0;a<b.length;a++){if(b[a]!=""){d.innerHTML+=retButton(b[a])+"<br>"}else{d.innerHTML+="<br>"}}},complete:function(){document.getElementById("events").innerHTML+="</span>"}});</script>
+</div>
+<script type=text/javascript>(function(g,a,i){(a[i]=a[i]||[]).push(function(){try{a.yaCounter28261681=new Ya.Metrika({id:28261681,webvisor:true,clickmap:true,trackLinks:true,accurateTrackBounce:true})}catch(c){}});var h=g.getElementsByTagName("script")[0],b=g.createElement("script"),e=function(){h.parentNode.insertBefore(b,h)};b.type="text/javascript";b.async=true;b.src=(g.location.protocol=="https:"?"https:":"http:")+"//mc.yandex.ru/metrika/watch.js";if(a.opera=="[object Opera]"){g.addEventListener("DOMContentLoaded",e,false)}else{e()}})(document,window,"yandex_metrika_callbacks");</script>
+<noscript>
+<div><img src=//mc.yandex.ru/watch/28261681 style=position:absolute;left:-9999px alt=""/></div>
+</noscript>
+</body>
+</html>
