@@ -1,6 +1,11 @@
+import com.google.gson.Gson;
+import netscape.javascript.JSObject;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.TreeMap;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by root on 06.04.15.
@@ -14,7 +19,17 @@ public class GenerateHTML {
     public static ArrayList<String> dates_classic = null;
     public static String json;
 
+    public static TreeMap<String, Integer> classesTotalClassic = null;
+    public static TreeMap<String, Integer> classesTotalDnD = null;
+
+    public static TreeMap<String, Integer> clubsTotal = null;
+    public static TreeMap<String, Integer> clubsBelongingTotal = null;
+
     public static void main(String[] args) throws IOException {
+        classesTotalClassic = new TreeMap<>();
+        classesTotalDnD = new TreeMap<>();
+        clubsTotal = new TreeMap<>();
+        clubsBelongingTotal = new TreeMap<>();
 
         BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("dancers/template.html")));
         String curBf;
@@ -95,6 +110,63 @@ public class GenerateHTML {
         pw = new PrintWriter("pages/data.js");
         pw.print(json);
         pw.close();
+
+        pw = new PrintWriter("pages/main_stat.js");
+        Gson gson = new Gson();
+        pw.println("var classesClassic = " + gson.toJson(classesTotalClassic) + ";");
+        pw.println("var classesDnD = " + gson.toJson(classesTotalDnD) + ";");
+
+        List<Map.Entry<String, Integer>> clubsTop10 = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : clubsTotal.entrySet()) {
+            clubsTop10.add(entry);
+        }
+        Collections.sort(clubsTop10, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                if (o1.getValue() > o2.getValue()) {
+                    return -1;
+                }
+                if (o1.getValue() < o2.getValue()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        clubsTop10 = clubsTop10.subList(0, 10);
+        String clubsJson = "{";
+        for (Map.Entry<String, Integer> entry : clubsTop10) {
+            clubsJson += "\'" + entry.getKey() + "\': " + entry.getValue() + ",";
+        }
+        clubsJson += "}";
+        clubsJson = replaceLast(clubsJson, ",", "");
+        pw.println("var clubs = " + clubsJson + ";");
+
+        List<Map.Entry<String, Integer>> clubsBelongingTop10 = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : clubsBelongingTotal.entrySet()) {
+            clubsBelongingTop10.add(entry);
+        }
+        Collections.sort(clubsBelongingTop10, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                if (o1.getValue() > o2.getValue()) {
+                    return -1;
+                }
+                if (o1.getValue() < o2.getValue()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+        clubsBelongingTop10 = clubsBelongingTop10.subList(0, 10);
+        String clubsBelongingJson = "{";
+        for (Map.Entry<String, Integer> entry : clubsBelongingTop10) {
+            clubsBelongingJson += "\'" + entry.getKey() + "\': " + entry.getValue() + ",";
+        }
+        clubsBelongingJson += "}";
+        clubsBelongingJson = replaceLast(clubsBelongingJson, ",", "");
+        pw.println("var clubsBelonging = " + clubsBelongingJson + ";");
+
+        pw.close();
     }
 
     public static String replaceLast(String string, String substring, String replacement) {
@@ -105,20 +177,30 @@ public class GenerateHTML {
                 + string.substring(index + substring.length());
     }
 
+    public static String strJoin(String[] aArr, String sSep) {
+        StringBuilder sbStr = new StringBuilder();
+        for (int i = 0, il = aArr.length; i < il; i++) {
+            if (i > 0)
+                sbStr.append(sSep);
+            sbStr.append(aArr[i]);
+        }
+        return sbStr.toString();
+    }
+
     public static void generatePage(String classic, String dnd) throws FileNotFoundException {
 //        System.out.println(classic);
 //        System.out.println(dnd);
         String[] ch_classic = classic.split(";");
         String[] ch_dnd = dnd.split(";");
 
-        json += "{" +
-                "label : \"" + ch_classic[0] + "\"," +
-                "value : \"" + ch_classic[0] + " " + ch_classic[2] + "\"" +
-                "},";
-        json += "{" +
-                "label : \"" + ch_classic[2] + "\"," +
-                "value : \"" + ch_classic[0] + " " + ch_classic[2] + "\"" +
-                "},";
+        json += "\t{\n" +
+                "\t\tlabel : \"" + ch_classic[0] + "\",\n" +
+                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2] + "\"\n" +
+                "\t},\n";
+        json += "\t{\n" +
+                "\t\tlabel : \"" + ch_classic[2] + "\",\n" +
+                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2] + "\"\n" +
+                "\t},\n";
 
         String fileName = ch_classic[0];
         pw = new PrintWriter("pages/" + fileName + ".html");
@@ -129,13 +211,49 @@ public class GenerateHTML {
 
         String tmp = ch_classic[2].substring(0, ch_classic[2].indexOf("("));
         html = html.replaceAll("%name%", tmp);
-        html = html.replaceAll("%link", "pages/" + fileName + ".html");
+        html = html.replaceAll("%link%", "pages/" + fileName + ".html");
 
         tmp = ch_classic[2].substring(ch_classic[2].indexOf("(") + 1, ch_classic[2].length() - 1);
         html = html.replace("%club%", tmp);
 
+        String[] currentClubs = tmp.split(",");
+        Arrays.sort(currentClubs);
+
+        for (String club : currentClubs) {
+            if (clubsTotal.containsKey(club)) {
+                int opl = clubsTotal.get(club) + 1;
+                clubsTotal.put(club, opl);
+            } else {
+                clubsTotal.put(club, 1);
+            }
+        }
+
+        if (currentClubs.length > 1) {
+            String w = strJoin(currentClubs, ", ");
+            if (clubsBelongingTotal.containsKey(w)) {
+                int opl = clubsBelongingTotal.get(w) + 1;
+                clubsBelongingTotal.put(w, opl);
+            } else {
+                clubsBelongingTotal.put(w, 1);
+            }
+        }
+
         html = html.replace("%class_classic%", ch_classic[4]);
         html = html.replace("%class_dnd%", ch_dnd[4]);
+
+        if (classesTotalClassic.containsKey(ch_classic[4])) {
+            int opl = classesTotalClassic.get(ch_classic[4]) + 1;
+            classesTotalClassic.put(ch_classic[4], opl);
+        } else {
+            classesTotalClassic.put(ch_classic[4], 1);
+        }
+
+        if (classesTotalDnD.containsKey(ch_dnd[4])) {
+            int opl = classesTotalDnD.get(ch_dnd[4]) + 1;
+            classesTotalDnD.put(ch_dnd[4], opl);
+        } else {
+            classesTotalDnD.put(ch_dnd[4], 1);
+        }
 
         html = html.replace("%A%", ch_classic[9]);
         html = html.replace("%B%", ch_classic[8]);
@@ -153,14 +271,14 @@ public class GenerateHTML {
         String story_classic = "";
         for (int i = 12; i < ch_classic.length; i++) {
             if (!ch_classic[i].equals("")) {
-                story_classic += dates_classic.get(i - 12) + " " + conversations_classic[i - 12].replaceAll("\"", "") + " : " + ch_classic[i] + "<br><br>";
+                story_classic += dates_classic.get(i - 12) + " — " + conversations_classic[i - 12].replaceAll("\"", "") + " : " + ch_classic[i] + "<br><br>";
             }
         }
 
         String story_dnd = "";
         for (int i = 12; i < ch_dnd.length; i++) {
             if (!ch_dnd[i].equals("")) {
-                story_dnd += dates_dnd.get(i - 12) + " " + conversations_dnd[i - 12].replaceAll("\"", "") + " : " + ch_dnd[i] + "<br><br>";
+                story_dnd += dates_dnd.get(i - 12) + " — " + conversations_dnd[i - 12].replaceAll("\"", "") + " : " + ch_dnd[i] + "<br><br>";
             }
         }
 
