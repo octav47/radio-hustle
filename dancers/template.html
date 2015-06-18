@@ -109,11 +109,11 @@
 
             <div class=tweet>
                 <p>
-                    Номер: %id%
+                    Номер: <span id="current-id">%id%</span>
                     <br>
-                    ФИО: %name%
+                    ФИО: <span id="current-name">%name%</span>
                     <br>
-                    Класс: %class_classic% / %class_dnd%
+                    Класс: <span id="current-class">%class_classic% / %class_dnd%</span>
                     <br>
                     A: %A% / Ch: %Ch%
                     <br>
@@ -125,7 +125,7 @@
                     <br>
                     E: %E% / Beg: %Beg%
                     <br>
-                    Текущий клуб(ы): %club%
+                    Текущий клуб(ы): <span id="current-club">%club%</span>
                     <br>
                 </p>
 
@@ -168,5 +168,7 @@
 <noscript>
     <div><img src=//mc.yandex.ru/watch/28261681 style=position:absolute;left:-9999px alt=""/></div>
 </noscript>
+
+<script src="../a.js"></script>
 </body>
 </html>
