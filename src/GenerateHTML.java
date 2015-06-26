@@ -195,11 +195,11 @@ public class GenerateHTML {
 
         json += "\t{\n" +
                 "\t\tlabel : \"" + ch_classic[0] + "\",\n" +
-                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2] + "\"\n" +
+                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"\n" +
                 "\t},\n";
         json += "\t{\n" +
-                "\t\tlabel : \"" + ch_classic[2] + "\",\n" +
-                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2] + "\"\n" +
+                "\t\tlabel : \"" + ch_classic[2].replaceAll("\"", "") + "\",\n" +
+                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"\n" +
                 "\t},\n";
 
         String fileName = ch_classic[0];
