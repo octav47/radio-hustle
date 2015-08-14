@@ -203,18 +203,24 @@ public class GenerateHTML {
                 "\t},\n";
 
         String fileName = ch_classic[0];
+        String sdj = "{"; // Single Dancer Json
+        PrintWriter printWriterSingleDancerJson = new PrintWriter("ajax/" + fileName + ".json");
         pw = new PrintWriter("pages/" + fileName + ".html");
 
         String html = "".concat(template);
 
         html = html.replaceAll("%id%", ch_classic[0]);
+        sdj += "\"id\":\"" + ch_classic[0] + "\",";
 
         String tmp = ch_classic[2].substring(0, ch_classic[2].indexOf("("));
         html = html.replaceAll("%name%", tmp);
         html = html.replaceAll("%link%", "pages/" + fileName + ".html");
+        sdj += "\"name\":\"" + tmp + "\",";
+        sdj += "\"link\":\"" + "pages/" + fileName + ".html" + "\",";
 
         tmp = ch_classic[2].substring(ch_classic[2].indexOf("(") + 1, ch_classic[2].length() - 1);
         html = html.replace("%club%", tmp);
+        sdj += "\"club\":\"" + tmp + "\",";
 
         String[] currentClubs = tmp.split(",");
         Arrays.sort(currentClubs);
@@ -240,6 +246,8 @@ public class GenerateHTML {
 
         html = html.replace("%class_classic%", ch_classic[4]);
         html = html.replace("%class_dnd%", ch_dnd[4]);
+        sdj += "\"class_classic\":\"" + ch_classic[4] + "\",";
+        sdj += "\"class_dnd\":\"" + ch_dnd[4] + "\",";
 
         if (classesTotalClassic.containsKey(ch_classic[4])) {
             int opl = classesTotalClassic.get(ch_classic[4]) + 1;
@@ -267,6 +275,18 @@ public class GenerateHTML {
         html = html.replace("%RS%", ch_dnd[6]);
         html = html.replace("%Beg%", ch_dnd[5]);
 
+        sdj += "\"A\":\"" + ch_classic[9] + "\",";
+        sdj += "\"B\":\"" + ch_classic[8] + "\",";
+        sdj += "\"C\":\"" + ch_classic[7] + "\",";
+        sdj += "\"D\":\"" + ch_classic[6] + "\",";
+        sdj += "\"E\":\"" + ch_classic[5] + "\",";
+
+        sdj += "\"Ch\":\"" + ch_dnd[9] + "\",";
+        sdj += "\"S\":\"" + ch_dnd[8] + "\",";
+        sdj += "\"M\":\"" + ch_dnd[7] + "\",";
+        sdj += "\"RS\":\"" + ch_dnd[6] + "\",";
+        sdj += "\"Beg\":\"" + ch_dnd[5] + "\",";
+
 
         String story_classic = "";
         for (int i = 12; i < ch_classic.length; i++) {
@@ -284,8 +304,13 @@ public class GenerateHTML {
 
         html = html.replace("%story_classic%", story_classic);
         html = html.replace("%story_dnd%", story_dnd);
+
+        sdj += "\"story_classic\":\"" + story_classic + "\",";
+        sdj += "\"story_dnd\":\"" + story_dnd + "\"}";
 //        System.out.println(story_classic.replaceAll("<br>", "\n"));
 //        System.out.println(story_dnd.replaceAll("<br>", "\n"));
+        printWriterSingleDancerJson.print(sdj);
+        printWriterSingleDancerJson.close();
         pw.print(html);
         pw.close();
     }
