@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Created by root on 06.04.15.
  */
-public class GenerateHTML {
+public class Generate {
     public static PrintWriter pw;
     public static String template = "";
     public static String[] conversations_classic;
