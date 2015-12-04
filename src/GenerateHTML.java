@@ -98,7 +98,7 @@ public class GenerateHTML {
 
         json = "var data = [";
         curBf = bf.readLine();
-        while (!curBf.contains("ЗНАЧ") && !curBf.contains("EOF") && !curBf.contains("1/1") && !curBf.contains("#Н/Д")) {
+        while (!curBf.contains("ЗНАЧ") && !curBf.contains("EOF")) {
 //            if (curBf.contains("5048") || curBf.contains("6472") || curBf.contains("6776")) {
 //                System.out.println(curBf);
             generatePage(curBf, map.get(curBf.split(";")[0]));
@@ -132,7 +132,7 @@ public class GenerateHTML {
                 return 0;
             }
         });
-        clubsTop10 = clubsTop10.subList(0, 10);
+        clubsTop10 = clubsTop10.subList(0, 9);
         String clubsJson = "{";
         for (Map.Entry<String, Integer> entry : clubsTop10) {
             clubsJson += "\'" + entry.getKey() + "\': " + entry.getValue() + ",";
@@ -311,5 +311,8 @@ public class GenerateHTML {
 //        System.out.println(story_dnd.replaceAll("<br>", "\n"));
         printWriterSingleDancerJson.print(sdj);
         printWriterSingleDancerJson.close();
+
+        pw.print(html);
+        pw.close();
     }
 }
