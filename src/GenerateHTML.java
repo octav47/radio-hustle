@@ -205,21 +205,21 @@ public class GenerateHTML {
         String fileName = ch_classic[0];
         String sdj = "{"; // Single Dancer Json
         PrintWriter printWriterSingleDancerJson = new PrintWriter("ajax/" + fileName + ".json");
-        pw = new PrintWriter("pages/" + fileName + ".html");
+//        pw = new PrintWriter("pages/" + fileName + ".html");
 
-        String html = "".concat(template);
+//        String html = "".concat(template);
 
-        html = html.replaceAll("%id%", ch_classic[0]);
+//        html = html.replaceAll("%id%", ch_classic[0]);
         sdj += "\"id\":\"" + ch_classic[0] + "\",";
 
         String tmp = ch_classic[2].substring(0, ch_classic[2].indexOf("("));
-        html = html.replaceAll("%name%", tmp);
-        html = html.replaceAll("%link%", "pages/" + fileName + ".html");
+//        html = html.replaceAll("%name%", tmp);
+//        html = html.replaceAll("%link%", "pages/" + fileName + ".html");
         sdj += "\"name\":\"" + tmp + "\",";
         sdj += "\"link\":\"" + "pages/" + fileName + ".html" + "\",";
 
         tmp = ch_classic[2].substring(ch_classic[2].indexOf("(") + 1, ch_classic[2].length() - 1);
-        html = html.replace("%club%", tmp);
+//        html = html.replace("%club%", tmp);
         sdj += "\"club\":\"" + tmp + "\",";
 
         String[] currentClubs = tmp.split(",");
@@ -244,8 +244,8 @@ public class GenerateHTML {
             }
         }
 
-        html = html.replace("%class_classic%", ch_classic[4]);
-        html = html.replace("%class_dnd%", ch_dnd[4]);
+//        html = html.replace("%class_classic%", ch_classic[4]);
+//        html = html.replace("%class_dnd%", ch_dnd[4]);
         sdj += "\"class_classic\":\"" + ch_classic[4] + "\",";
         sdj += "\"class_dnd\":\"" + ch_dnd[4] + "\",";
 
@@ -263,17 +263,17 @@ public class GenerateHTML {
             classesTotalDnD.put(ch_dnd[4], 1);
         }
 
-        html = html.replace("%A%", ch_classic[9]);
-        html = html.replace("%B%", ch_classic[8]);
-        html = html.replace("%C%", ch_classic[7]);
-        html = html.replace("%D%", ch_classic[6]);
-        html = html.replace("%E%", ch_classic[5]);
-
-        html = html.replace("%Ch%", ch_dnd[9]);
-        html = html.replace("%S%", ch_dnd[8]);
-        html = html.replace("%M%", ch_dnd[7]);
-        html = html.replace("%RS%", ch_dnd[6]);
-        html = html.replace("%Beg%", ch_dnd[5]);
+//        html = html.replace("%A%", ch_classic[9]);
+//        html = html.replace("%B%", ch_classic[8]);
+//        html = html.replace("%C%", ch_classic[7]);
+//        html = html.replace("%D%", ch_classic[6]);
+//        html = html.replace("%E%", ch_classic[5]);
+//
+//        html = html.replace("%Ch%", ch_dnd[9]);
+//        html = html.replace("%S%", ch_dnd[8]);
+//        html = html.replace("%M%", ch_dnd[7]);
+//        html = html.replace("%RS%", ch_dnd[6]);
+//        html = html.replace("%Beg%", ch_dnd[5]);
 
         sdj += "\"A\":\"" + ch_classic[9] + "\",";
         sdj += "\"B\":\"" + ch_classic[8] + "\",";
@@ -302,8 +302,8 @@ public class GenerateHTML {
             }
         }
 
-        html = html.replace("%story_classic%", story_classic);
-        html = html.replace("%story_dnd%", story_dnd);
+//        html = html.replace("%story_classic%", story_classic);
+//        html = html.replace("%story_dnd%", story_dnd);
 
         sdj += "\"story_classic\":\"" + story_classic + "\",";
         sdj += "\"story_dnd\":\"" + story_dnd + "\"}";
@@ -312,7 +312,7 @@ public class GenerateHTML {
         printWriterSingleDancerJson.print(sdj);
         printWriterSingleDancerJson.close();
 
-        pw.print(html);
-        pw.close();
+//        pw.print(html);
+//        pw.close();
     }
 }
