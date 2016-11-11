@@ -98,7 +98,7 @@ public class GenerateHTML {
 
         json = "var data = [";
         curBf = bf.readLine();
-        while (!curBf.contains("ЗНАЧ") && !curBf.contains("EOF")) {
+        while (!curBf.contains("ЗНАЧ0") && !curBf.contains("EOF")) {
 //            if (curBf.contains("5048") || curBf.contains("6472") || curBf.contains("6776")) {
 //                System.out.println(curBf);
             generatePage(curBf, map.get(curBf.split(";")[0]));
@@ -193,14 +193,14 @@ public class GenerateHTML {
         String[] ch_classic = classic.split(";");
         String[] ch_dnd = dnd.split(";");
 
-        json += "\t{\n" +
-                "\t\tlabel : \"" + ch_classic[0] + "\",\n" +
-                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"\n" +
-                "\t},\n";
-        json += "\t{\n" +
-                "\t\tlabel : \"" + ch_classic[2].replaceAll("\"", "") + "\",\n" +
-                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"\n" +
-                "\t},\n";
+        json += "{" +
+                "label : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"," +
+                "value : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
+                "},";
+//        json += "\t{\n" +
+//                "\t\tlabel : \"" + ch_classic[2].replaceAll("\"", "") + "\",\n" +
+//                "\t\tvalue : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"\n" +
+//                "\t},\n";
 
         String fileName = ch_classic[0];
         String sdj = "{"; // Single Dancer Json
