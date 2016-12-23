@@ -194,8 +194,8 @@ public class GenerateHTML {
         String[] ch_dnd = dnd.split(";");
 
         json += "{" +
-                "label : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"," +
-                "value : \"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
+                "label:\"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
+//                "value:\"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
                 "},";
 //        json += "\t{\n" +
 //                "\t\tlabel : \"" + ch_classic[2].replaceAll("\"", "") + "\",\n" +
