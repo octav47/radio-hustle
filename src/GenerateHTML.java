@@ -81,6 +81,9 @@ public class GenerateHTML {
         datesTmp = datesString.split(";");
         dates_classic = new ArrayList<>();
         for (String s : datesTmp) {
+            if (s.contains(",27")) {
+                s = s.replace(",27", "");
+            }
             if (s.matches("\\d{1,2}\\.\\d{1,2}\\.\\d+")) {
                 dates_classic.add(s);
             } else {
@@ -216,7 +219,7 @@ public class GenerateHTML {
 //        html = html.replaceAll("%name%", tmp);
 //        html = html.replaceAll("%link%", "pages/" + fileName + ".html");
         sdj += "\"name\":\"" + tmp + "\",";
-        sdj += "\"link\":\"" + "pages/" + fileName + ".html" + "\",";
+//        sdj += "\"link\":\"" + "pages/" + fileName + ".html" + "\",";
 
         tmp = ch_classic[2].substring(ch_classic[2].indexOf("(") + 1, ch_classic[2].length() - 1);
 //        html = html.replace("%club%", tmp);
