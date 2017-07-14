@@ -197,7 +197,7 @@ public class GenerateHTML {
         String[] ch_dnd = dnd.split(";");
 
         json += "{" +
-                "label:\"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
+                "label:\"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "").replaceAll(" \\(.*\\)", "") + "\"" +
 //                "value:\"" + ch_classic[0] + " " + ch_classic[2].replaceAll("\"", "") + "\"" +
                 "},";
 //        json += "\t{\n" +
@@ -214,6 +214,9 @@ public class GenerateHTML {
 
 //        html = html.replaceAll("%id%", ch_classic[0]);
         sdj += "\"id\":\"" + ch_classic[0] + "\",";
+
+        String sex = (Objects.equals(ch_classic[1], "м")) ? "m" : "f";
+        sdj += "\"sex\":\"" + sex + "\",";
 
         String tmp = ch_classic[2].substring(0, ch_classic[2].indexOf("("));
 //        html = html.replaceAll("%name%", tmp);
